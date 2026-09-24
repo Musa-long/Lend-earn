@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DATA/247 - LEND AND EARN WITH US</title>
+<style>
+*{box-sizing:border-box;font-family:Arial}
+body{background:#f5f7fa;margin:0}
+.header{background:#fff;padding:15px 15px 20px;box-shadow:0 2px 5px rgba(0,0,0,.1)}
+.card{background:#fff;margin:12px;padding:16px;border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+input,select{width:100%;padding:14px;margin:8px 0;border:2px solid #ddd;border-radius:10px;font-size:16px}
+button{width:100%;padding:15px;background:#008753;color:#fff;border:0;border-radius:10px;font-weight:900;font-size:16px;margin-top:8px}
+.wa{position:fixed;bottom:15px;right:15px;background:#25D366;color:#fff;padding:12px 18px;border-radius:30px;text-decoration:none;font-weight:900;z-index:999}
+.green{color:#008753;font-weight:900;font-size:22px}
+</style>
+</head>
+<body>
+<a class="wa" href="https://wa.me/2349167452777">💬 09167452777</a>
+
+<div class="header">
+<div style="display:flex;justify-content:space-between;align-items:center"><b>DATA/247 CAPITAL</b><a href="admin.html" style="background:#0f172a;color:#fff;padding:6px 12px;border-radius:20px;text-decoration:none;font-size:12px">ADMIN</a></div>
+<div style="text-align:center;margin-top:16px">
+<h1 style="font-size:22px;font-weight:900;line-height:1.2;color:#0f172a;margin:0">LEND AND EARN WITH US</h1>
+<p style="font-size:13px;font-weight:700;color:#008753;margin-top:6px;letter-spacing:0.5px">SMOOTH AND SAFE TO GROW YOUR INCOME</p>
+<div style="width:50px;height:4px;background:#008753;margin:10px auto 0;border-radius:10px"></div>
+</div>
+</div>
+
+<div class="card"><h3>1. Register / Login</h3><div id="auth"><input id="rName" placeholder="Full Name"><input id="rPhone" placeholder="Phone 091..."><input id="rPass" type="password" placeholder="Password"><button onclick="doRegister()">CREATE ACCOUNT</button><hr><input id="lPhone" placeholder="Phone for Login"><input id="lPass" type="password" placeholder="Password"><button onclick="doLogin()" style="background:#0f172a">LOGIN</button></div><div id="wel" style="display:none"><h3>Welcome <span id="uName"></span> ✅</h3><button onclick="doLogout()" style="background:#ccc;color:#000">Logout</button></div></div>
+<div class="card"><h3>2. How much to lend?</h3><input id="amt" type="number" value="500000"><select id="mon"><option value="1">1 Month</option><option value="3">3 Months</option><option value="6">6 Months</option></select><p>Interest: <span id="int" class="green">₦0</span></p><p>Total: <b id="tot">₦0</b></p><p>Due: <b id="due">-</b></p><button onclick="goPay()">PROCEED TO LEND</button></div>
+<div id="payBox" class="card" style="display:none"><h3>3. Pay to Sterling Bank 8387778364</h3><button onclick="confirmPay()" style="background:#25D366">I HAVE PAID</button></div>
+<div class="card" id="dash"><h3>📊 Dashboard</h3><p>Lent: <span id="dLent">₦0</span> | Interest: <span id="dInt">₦0</span></p></div>
+<div class="card"><h3>💸 Withdrawal - Your Account Details</h3><input id="wBank" placeholder="Your Bank Name"><input id="wNum" placeholder="Your Account Number"><input id="wName" placeholder="Your Account Name"><input id="wAmt" placeholder="Amount"><button onclick="doWithdraw()">SUBMIT WITHDRAWAL</button><a href="https://wa.me/2349167452777" style="display:block;text-align:center;margin-top:10px;background:#25D366;color:#fff;padding:12px;border-radius:10px;text-decoration:none;font-weight:900">Customer Care WhatsApp 09167452777</a></div>
+
+<script>
+function calculate(){var a=Number(document.getElementById('amt').value)||0;var m=Number(document.getElementById('mon').value)||1;var i=a*0.20*m;document.getElementById('int').innerText='₦'+i.toLocaleString();document.getElementById('tot').innerText='₦'+(a+i).toLocaleString();var d=new Date();d.setMonth(d.getMonth()+m);document.getElementById('due').innerText=d.toDateString();document.getElementById('dLent').innerText='₦'+a.toLocaleString();document.getElementById('dInt').innerText='₦'+i.toLocaleString();document.getElementById('wAmt').value=i;}
+document.getElementById('amt').addEventListener('input',calculate);document.getElementById('mon').addEventListener('change',calculate);
+window.onload=function(){calculate();checkUser();};
+function doRegister(){var n=document.getElementById('rName').value,p=document.getElementById('rPhone').value,ps=document.getElementById('rPass').value;if(!n||!p||!ps)return alert('Fill all');localStorage.setItem('user',JSON.stringify({name:n,phone:p,pass:ps}));localStorage.setItem('current',JSON.stringify({name:n,phone:p}));alert('Registered');location.reload();}
+function doLogin(){var p=document.getElementById('lPhone').value,ps=document.getElementById('lPass').value;var u=JSON.parse(localStorage.getItem('user')||'null');if(!u||u.phone!==p||u.pass!==ps)return alert('Wrong');localStorage.setItem('current',JSON.stringify(u));location.reload();}
+function checkUser(){var c=localStorage.getItem('current');if(c){var u=JSON.parse(c);document.getElementById('auth').style.display='none';document.getElementById('wel').style.display='block';document.getElementById('uName').innerText=u.name;}}
+function doLogout(){localStorage.removeItem('current');location.reload();}
+function goPay(){if(!localStorage.getItem('current'))return alert('Login first');document.getElementById('payBox').style.display='block';}
+function confirmPay(){var a=document.getElementById('amt').value;var c=JSON.parse(localStorage.getItem('current'));alert('Confirmed ₦'+a+' - Send proof to 09167452777');window.open('https://wa.me/2349167452777?text=Paid%20₦'+a+'%20by%20'+c.name,'_blank');}
+function doWithdraw(){var b=document.getElementById('wBank').value,n=document.getElementById('wNum').value,nm=document.getElementById('wName').value,am=document.getElementById('wAmt').value;if(!b||!n)return alert('Fill details');alert('Withdrawal to '+b+' '+n+' submitted');window.open('https://wa.me/2349167452777?text=Withdraw%20'+b+'%20'+n+'%20₦'+am,'_blank');}
+</script>
+</body>
+</html>
