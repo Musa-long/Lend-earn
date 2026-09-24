@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin - DATA247</title>
+<style>body{font-family:Arial;background:#0f172a;color:#fff;padding:14px}.card{background:#1e293b;padding:14px;border-radius:12px;margin:10px 0}.btn{background:#008753;color:#fff;padding:8px 14px;border-radius:8px;border:0;cursor:pointer;text-decoration:none} table{width:100%;font-size:12px;border-collapse:collapse} th,td{border:1px solid #334155;padding:8px;text-align:left} th{background:#008753}</style>
+</head><body>
+<h2>🔐 DATA/247 Admin Panel</h2>
+<a href="index.html" class="btn">← Back to Site</a> <a href="https://wa.me/2349167452777" class="btn" style="background:#25D366">WhatsApp Customer Care</a>
+<div style="margin-top:14px">Password: <input id="pass" type="password" placeholder="Enter admin123" style="padding:8px;border-radius:6px"><button class="btn" onclick="login()">Login</button></div>
+
+<div id="panel" style="display:none">
+<div class="card"><h3>💰 New Lendings (Deposits)</h3><table id="lendTable"><tr><th>Name</th><th>Amount</th><th>Date</th><th>Due</th><th>Status</th><th>Action</th></tr></table></div>
+<div class="card"><h3>💸 Withdrawal Requests - With Account Details</h3><table id="withTable"><tr><th>Type</th><th>Bank Name</th><th>Acc Number</th><th>Acc Name</th><th>Amount</th><th>Date</th><th>Action</th></tr></table></div>
+<div class="card"><h3>🏦 Company Bank</h3>Sterling Bank<br>DATA/247 COMMUNICATION LTD-wad<br><b>8387778364</b><br>Customer Care WhatsApp: 09167452777</div>
+</div>
+
+<script>
+function login(){if(document.getElementById('pass').value!=='admin123')return alert('Wrong password - use admin123');document.getElementById('panel').style.display='block';load();}
+function load(){
+ let lends=JSON.parse(localStorage.getItem('lendings')||'[]');
+ let lt=document.getElementById('lendTable'); lends.forEach((l,i)=>{lt.innerHTML+=`<tr><td>${l.name}</td><td>₦${l.amount}</td><td>${l.date}</td><td>${l.due}</td><td>${l.status}</td><td><button class="btn" onclick="approveLend(${i})">Approve</button> <a class="btn" style="background:#25D366" href="https://wa.me/234${'9167452777'}?text=Hello%20${encodeURIComponent(l.name)}%20your%20lending%20of%20${l.amount}%20approved">WhatsApp</a></td></tr>`});
+ let withs=JSON.parse(localStorage.getItem('withdrawals')||'[]');
+ let wt=document.getElementById('withTable'); withs.forEach((w,i)=>{wt.innerHTML+=`<tr><td>${w.type}</td><td>${w.bank}</td><td>${w.accNo}</td><td>${w.accName}</td><td>₦${w.amount}</td><td>${w.date}</td><td><button class="btn" onclick="pay(${i})">Mark Paid</button></td></tr>`});
+}
+function approveLend(i){let a=JSON.parse(localStorage.getItem('lendings'));a[i].status='Approved';localStorage.setItem('lendings',JSON.stringify(a));alert('Approved');location.reload();}
+function pay(i){let a=JSON.parse(localStorage.getItem('withdrawals'));a.splice(i,1);localStorage.setItem('withdrawals',JSON.stringify(a));alert('Withdrawal marked as paid - Pay to their account details shown');location.reload();}
+</script>
+</body></html>
