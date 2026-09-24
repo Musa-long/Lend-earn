@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DATA/247 Capital - Lend & Earn | Sterling Bank Partner</title>
+<meta property="og:title" content="DATA/247 Capital - Lend Money & Earn Up To 20% Monthly">
+<meta property="og:description" content="SEC Compliant Lending Platform. Sterling Bank Partner. Port Harcourt.">
+<meta property="og:image" content="https://dco-lhpp.onrender.com/preview.jpg">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial}
+body{background:#f8fafc;color:#0f172a}
+.header{background:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.05);position:sticky;top:0;z-index:10}
+.logo{font-weight:900;color:#008753;font-size:18px} .logo span{color:#0f172a}
+.nav a{margin-left:12px;text-decoration:none;color:#334155;font-size:13px;font-weight:600}
+.hero{background:linear-gradient(135deg,#008753,#00b96a);color:#fff;padding:40px 18px;text-align:center}
+.hero h1{font-size:28px;line-height:1.2} .hero p{margin:12px 0;opacity:.9}
+.btn{padding:14px 26px;border-radius:10px;border:0;font-weight:800;cursor:pointer}
+.btn-white{background:#fff;color:#008753} .btn-green{background:#008753;color:#fff;width:100%}
+.card{background:#fff;border-radius:14px;padding:18px;margin:14px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.badge{background:#e6f7ed;color:#008753;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.input{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;margin:8px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bank-box{background:#f1f5f9;border:2px dashed #008753;padding:16px;border-radius:10px;margin:12px 0}
+.warn{background:#fef3c7;border-left:4px solid #f59e0b;padding:12px;font-size:12px;border-radius:6px;margin:10px 14px}
+.calc{font-size:26px;font-weight:900;color:#008753}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="logo">DATA/247 <span>CAPITAL</span></div>
+<div class="nav"><a href="#lend">LEND</a><a href="#dash">DASHBOARD</a><a href="https://wa.me/2349167452777">WHATSAPP</a></div>
+</div>
+
+<div class="hero">
+<span class="badge">✓ CAC REGISTERED • STERLING BANK PARTNER</span>
+<h1 style="margin-top:12px">Lend Money To Our Company & Earn Interest</h1>
+<p>Join 3,200+ Nigerians in Port Harcourt, Lagos & Abuja earning with DATA/247</p>
+<button class="btn btn-white" onclick="document.getElementById('lend').scrollIntoView()">I WANT TO LEND & EARN →</button>
+<p style="font-size:11px;margin-top:12px;opacity:.8">Returns subject to market performance. See risk disclosure.</p>
+</div>
+
+<div class="warn">⚠️ <b>Compliance Notice:</b> This platform facilitates lending to DATA/247 COMMUNICATION LTD. Returns are not guaranteed. Please read Terms, do KYC verification, and ensure CBN/SEC licensing before investing real funds. Max 20% is indicative, not fixed guarantee.</div>
+
+<div id="lend" class="card">
+<h3>💰 Lending Calculator</h3>
+<label>How much you want to lend? (₦)</label>
+<input id="amount" class="input" type="number" value="100000" oninput="calc()">
+<div class="grid">
+<div><small>Monthly Rate</small><br><b>Up to 20%</b></div>
+<div><small>Duration</small><select id="months" class="input" onchange="calc()"><option value="1">1 Month</option><option value="3">3 Months</option><option value="6">6 Months</option><option value="12">12 Months</option></select></div>
+</div>
+<div style="margin:12px 0">Interest: <span class="calc" id="interest">₦20,000</span><br>Total Return: <span class="calc" id="total">₦120,000</span><br><small>Due Date: <b id="due">-</b></small></div>
+<button class="btn btn-green" onclick="showDeposit()">PROCEED TO LEND</button>
+</div>
+
+<div class="card" id="depositBox" style="display:none">
+<h3>🏦 Company Bank Details - Make Transfer</h3>
+<div class="bank-box">
+<b>Bank Name:</b> Sterling Bank<br>
+<b>Account Name:</b> DATA/247 COMMUNICATION LTD-wad<br>
+<b>Account Number:</b> <span style="font-size:20px;font-weight:900;letter-spacing:1px">8387778364</span><br><br>
+<button class="btn btn-green" onclick="navigator.clipboard.writeText('8387778364');alert('Account number copied!')">COPY ACCOUNT NUMBER</button>
+</div>
+<p style="font-size:13px">After transfer, upload proof + WhatsApp us: <a href="https://wa.me/2349167452777">09167452777</a></p>
+<input type="file" class="input"><input placeholder="Your Full Name" class="input" id="name"><input placeholder="Amount Sent" class="input" id="sent">
+<button class="btn btn-green" onclick="register()">I HAVE PAID - REGISTER MY LENDING</button>
+</div>
+
+<div id="dash" class="card">
+<h3>👤 My Dashboard (Demo)</h3>
+<div style="display:flex;justify-content:space-between"><span>Total Lent</span><b id="dLent">₦0</b></div>
+<div style="display:flex;justify-content:space-between"><span>Interest Earned</span><b id="dInt" style="color:#008753">₦0</b></div>
+<div style="display:flex;justify-content:space-between"><span>Withdrawable Date</span><b id="dDue">-</b></div>
+<hr style="margin:12px 0">
+<button class="btn btn-green" style="background:#e2e8f0;color:#0f172a" onclick="alert('Withdrawal request sent! Admin will review. Contact WhatsApp: 09167452777')">WITHDRAW INTEREST</button>
+<button class="btn btn-green" style="margin-top:8px" onclick="alert('Capital + Interest withdrawal requested!')">WITHDRAW CAPITAL + INTEREST</button>
+</div>
+
+<div class="card" style="text-align:center;font-size:12px;color:#64748b">
+<b>DATA/247 COMMUNICATION LTD-wad</b><br>Sterling Bank: 8387778364<br>Customer Care: 09167452777 (WhatsApp)<br>Port Harcourt, Rivers State<br><br>
+By lending you agree to Terms & Risk Disclosure. No guaranteed returns.
+</div>
+
+<script>
+function calc(){
+ let amt=parseFloat(document.getElementById('amount').value)||0;
+ let m=parseInt(document.getElementById('months').value);
+ let rate=0.20; // you can change
+ let interest=amt*rate*m;
+ document.getElementById('interest').innerText='₦'+interest.toLocaleString();
+ document.getElementById('total').innerText='₦'+(amt+interest).toLocaleString();
+ let d=new Date(); d.setMonth(d.getMonth()+m);
+ document.getElementById('due').innerText=d.toDateString();
+}
+function showDeposit(){ document.getElementById('depositBox').style.display='block'; document.getElementById('depositBox').scrollIntoView(); }
+function register(){
+ let amt=document.getElementById('amount').value;
+ let n=document.getElementById('name').value||'Investor';
+ localStorage.setItem('lent',amt); localStorage.setItem('name',n);
+ let due=document.getElementById('due').innerText;
+ localStorage.setItem('due',due);
+ alert('Thank you '+n+'! Lending of ₦'+amt+' recorded. Please send proof to WhatsApp 09167452777');
+ loadDash();
+}
+function loadDash(){
+ let l=localStorage.getItem('lent')||0;
+ document.getElementById('dLent').innerText='₦'+parseInt(l).toLocaleString();
+ document.getElementById('dInt').innerText='₦'+(l*0.20).toLocaleString();
+ document.getElementById('dDue').innerText=localStorage.getItem('due')||'-';
+}
+calc(); loadDash();
+</script>
+</body>
+</html>
