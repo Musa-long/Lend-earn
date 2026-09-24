@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DATA/247 Capital - Lend & Earn</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial}
+body{background:#f4f7f9;color:#0f172a}
+.header{background:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.logo{font-weight:900;color:#008753}.logo span{color:#0f172a}
+.card{background:#fff;border-radius:14px;padding:18px;margin:14px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.btn{padding:14px 22px;border-radius:10px;border:0;font-weight:800;cursor:pointer;display:block;width:100%;text-align:center;text-decoration:none;margin-top:8px}
+.btn-green{background:#008753;color:#fff}.btn-wa{background:#25D366;color:#fff}.btn-white{background:#fff;color:#008753;border:1px solid #e2e8f0}
+.input,select{width:100%;padding:13px;border:2px solid #e2e8f0;border-radius:10px;margin:6px 0;font-size:15px;outline:none}
+.input:focus{border-color:#f59e0b}
+.bank-box{background:#f1f5f9;border:2px dashed #008753;padding:16px;border-radius:12px}
+.wa-float{position:fixed;bottom:20px;right:18px;background:#25D366;color:#fff;padding:14px 20px;border-radius:50px;font-weight:900;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.3);z-index:99}
+.calc{font-size:26px;font-weight:900;color:#008753}
+</style>
+</head>
+<body>
+<a class="wa-float" href="https://wa.me/2349167452777?text=Hello%20Customer%20Care">💬 Customer Care</a>
+<div class="header"><div class="logo">DATA/247 <span>CAPITAL</span></div><a href="admin.html" style="background:#0f172a;color:#fff;padding:6px 12px;border-radius:20px;text-decoration:none;font-size:12px">ADMIN</a></div>
+
+<div style="background:linear-gradient(135deg,#008753,#00b96a);color:#fff;padding:36px 18px;text-align:center"><h1>Lend Money & Earn Interest</h1><p style="margin-top:8px">Sterling Bank Partner - 09167452777</p></div>
+
+<div id="authBox" class="card">
+<h3>🔐 Register / Login</h3>
+<div id="regForm"><input id="regName" class="input" placeholder="Full Name"><input id="regPhone" class="input" placeholder="Phone"><input id="regPass" type="password" class="input" placeholder="Password"><button class="btn btn-green" onclick="registerUser()">CREATE ACCOUNT</button><p style="text-align:center;font-size:13px;margin-top:8px"><a href="#" onclick="showLogin();return false">Already have account? Login</a></p></div>
+<div id="loginForm" style="display:none"><input id="logPhone" class="input" placeholder="Phone"><input id="logPass" type="password" class="input" placeholder="Password"><button class="btn btn-green" onclick="loginUser()">LOGIN</button><p style="text-align:center;font-size:13px;margin-top:8px"><a href="#" onclick="showReg();return false">No account? Register</a></p></div>
+<div id="welcome" style="display:none"><p>Welcome <b id="uName" style="color:#008753"></b>! <button onclick="logout()" style="color:red;background:none;border:0;font-weight:800">Logout</button></p><a href="https://wa.me/2349167452777" class="btn btn-wa">Chat Customer Care: 09167452777</a></div>
+</div>
+
+<div class="card">
+<h3>💰 Lending Calculator</h3>
+<label style="font-size:13px">How much you want to lend?</label>
+<input id="amount" class="input" type="number" value="500000" placeholder="e.g 500000">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
+<div><small>Monthly Rate</small><br><b>Up to 20%</b></div>
+<div><small>Duration</small><select id="months"><option value="1">1 Month</option><option value="3">3 Months</option><option value="6">6 Months</option><option value="12">12 Months</option></select></div>
+</div>
+<div style="margin:14px 0;background:#f8fafc;padding:14px;border-radius:10px">
+Interest: <span class="calc" id="interest">₦0</span><br>
+Total Return: <b id="total">₦0</b><br>
+Due Date: <b id="due">-</b>
+</div>
+<button class="btn btn-green" onclick="checkLoginFirst()">PROCEED TO LEND</button>
+</div>
+
+<div id="depositBox" class="card" style="display:none">
+<h3>🏦 Pay To</h3>
+<div class="bank-box">Sterling Bank<br><b>DATA/247 COMMUNICATION LTD-wad</b><br><b style="font-size:24px">8387778364</b><br><button class="btn btn-green" onclick="navigator.clipboard.writeText('8387778364');alert('Copied 8387778364')">COPY</button></div>
+<input id="payerAmount" class="input" placeholder="Amount Sent"><button class="btn btn-green" onclick="saveLending()">I HAVE PAID</button><a href="https://wa.me/2349167452777" class="btn btn-wa">SEND PROOF ON WHATSAPP</a>
+</div>
+
+<div class="card" id="dash"><h3>📊 My Dashboard</h3><p>Lent: <b id="dLent">₦0</b> | Interest: <b id="dInt" style="color:#008753">₦0</b> | Due: <b id="dDue">-</b></p></div>
+
+<div id="withdrawBox" class="card">
+<h3>💸 Withdrawal - Enter Your Account Details</h3>
+<select id="wType" class="input"><option>Withdraw Interest Only</option><option>Withdraw Capital + Interest</option></select>
+<input id="wBankName" class="input" placeholder="Your Bank Name"><input id="wAccNumber" class="input" placeholder="Your Account Number"><input id="wAccName" class="input" placeholder="Your Account Name"><input id="wAmount" class="input" type="number" placeholder="Amount to Withdraw"><button class="btn btn-green" onclick="requestWithdraw()">SUBMIT WITHDRAWAL</button>
+</div>
+
+<div class="card" style="text-align:center;font-size:12px">DATA/247 - Sterling 8387778364 - <a href="https://wa.me/2349167452777" style="color:#008753;font-weight:900">WhatsApp: 09167452777</a></div>
+
+<script>
+// FIXED CALCULATOR
+const amountInput = document.getElementById('amount');
+const monthsInput = document.getElementById('months');
+function calc(){
+ let amt = parseFloat(amountInput.value) || 0;
+ let m = parseInt(monthsInput.value) || 1;
+ let interest = amt * 0.20 * m;
+ let total = amt + interest;
+ document.getElementById('interest').innerText = '₦' + interest.toLocaleString();
+ document.getElementById('total').innerText = '₦' + total.toLocaleString();
+ let d = new Date(); d.setMonth(d.getMonth() + m);
+ document.getElementById('due').innerText = d.toDateString();
+ document.getElementById('payerAmount').value = amt;
+ document.getElementById('wAmount').value = interest;
+}
+// Live update on typing
+amountInput.addEventListener('input', calc);
+monthsInput.addEventListener('change', calc);
+
+function showLogin(){document.getElementById('regForm').style.display='none';document.getElementById('loginForm').style.display='block';}
+function showReg(){document.getElementById('loginForm').style.display='none';document.getElementById('regForm').style.display='block';}
+function registerUser(){let n=document.getElementById('regName').value,p=document.getElementById('regPhone').value,ps=document.getElementById('regPass').value;if(!n||!p||!ps)return alert('Fill all');let u=JSON.parse(localStorage.getItem('users')||'[]');if(u.find(x=>x.phone===p))return alert('Exists, login');u.push({name:n,phone:p,pass:ps});localStorage.setItem('users',JSON.stringify(u));localStorage.setItem('currentUser',JSON.stringify({name:n,phone:p}));location.reload();}
+function loginUser(){let p=document.getElementById('logPhone').value,ps=document.getElementById('logPass').value;let u=JSON.parse(localStorage.getItem('users')||'[]').find(x=>x.phone===p&&x.pass===ps);if(!u)return alert('Wrong');localStorage.setItem('currentUser',JSON.stringify(u));location.reload();}
+function logout(){localStorage.removeItem('currentUser');location.reload();}
+function checkAuth(){let cu=localStorage.getItem('currentUser');if(cu){let u=JSON.parse(cu);document.getElementById('regForm').style.display='none';document.getElementById('loginForm').style.display='none';document.getElementById('welcome').style.display='block';document.getElementById('uName').innerText=u.name;return true;}return false;}
+function checkLoginFirst(){if(!checkAuth()){alert('Register/Login first');document.getElementById('authBox').scrollIntoView();return;}document.getElementById('depositBox').style.display='block';document.getElementById('depositBox').scrollIntoView();}
+function saveLending(){let cu=JSON.parse(localStorage.getItem('currentUser'));let amt=document.getElementById('payerAmount').value;let all=JSON.parse(localStorage.getItem('lendings')||'[]');all.push({name:cu.name,phone:cu.phone,amount:amt,date:new Date().toLocaleString(),due:document.getElementById('due').innerText,status:'Pending'});localStorage.setItem('lendings',JSON.stringify(all));localStorage.setItem('myLent',amt);alert('Saved! Send proof to 09167452777');loadDash();window.location.href='https://wa.me/2349167452777?text=Paid%20₦'+amt+'%20to%208387778364%20by%20'+encodeURIComponent(cu.name);}
+function requestWithdraw(){let cu=JSON.parse(localStorage.getItem('currentUser'));let d={name:cu.name,phone:cu.phone,type:document.getElementById('wType').value,bank:document.getElementById('wBankName').value,accNo:document.getElementById('wAccNumber').value,accName:document.getElementById('wAccName').value,amount:document.getElementById('wAmount').value,date:new Date().toLocaleString()};if(!d.bank||!d.accNo)return alert('Fill account details');let w=JSON.parse(localStorage.getItem('withdrawals')||'[]');w.push(d);localStorage.setItem('withdrawals',JSON.stringify(w));alert('Withdrawal to '+d.bank+' '+d.accNo+' submitted');window.location.href='https://wa.me/2349167452777?text=Withdraw%20'+d.bank+'%20'+d.accNo+'%20₦'+d.amount;}
+function loadDash(){let ml=localStorage.getItem('myLent')||0;document.getElementById('dLent').innerText='₦'+parseInt(ml).toLocaleString();document.getElementById('dInt').innerText='₦'+(parseInt(ml)*0.20).toLocaleString();let lends=JSON.parse(localStorage.getItem('lendings')||'[]');if(lends.length)document.getElementById('dDue').innerText=lends.slice(-1)[0].due;}
+calc(); checkAuth(); loadDash();
+</script>
+</body>
+</html>
